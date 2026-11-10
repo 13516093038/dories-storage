@@ -1,0 +1,16 @@
+{
+    "name": "Dories.Storage.Sample",
+    "rootNamespace": "Dories.Storage.Sample",
+    "references": [
+        "Dories.Storage.Runtime"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

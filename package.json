@@ -1,0 +1,20 @@
+{
+    "name": "com.dories.storage",
+    "displayName": "Dories Storage",
+    "version": "1.0.0",
+    "unity": "2022.3",
+    "description": "本地键值存储：多文件（存档槽）、内存缓存 + 合并落盘、原子写、备份与损坏恢复、压缩与加密。存储介质、序列化、数据变换均可替换。",
+    "author": {
+        "name": "Dories"
+    },
+    "keywords": [
+        "save",
+        "storage",
+        "persistence"
+    ],
+    "license": "MIT",
+    "dependencies": {
+        "com.dories.logging": "1.0.0",
+        "com.unity.nuget.newtonsoft-json": "3.2.1"
+    }
+}

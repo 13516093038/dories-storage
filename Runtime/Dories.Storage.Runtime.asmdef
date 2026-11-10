@@ -1,0 +1,23 @@
+{
+    "name": "Dories.Storage.Runtime",
+    "rootNamespace": "Dories.Storage.Runtime",
+    "references": [
+        "Dories.Logging.Runtime",
+        "GUID:f51ebe6a0ceec4240a699833d6309b23"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [
+        {
+            "name": "com.cysharp.unitask",
+            "expression": "",
+            "define": "DORIES_UNITASK_SUPPORT"
+        }
+    ],
+    "noEngineReferences": false
+}
