@@ -20,7 +20,6 @@ namespace Dories.Storage.Runtime
         internal const string CorruptSuffix = ".corrupt";
 
         [SerializeField] 
-        [Tooltip("调用未传 file 时使用的文件名")]
         private string _defaultFile = "save.dat";
 
         [SerializeField, Min(0f)]
@@ -295,7 +294,14 @@ namespace Dories.Storage.Runtime
             }
         }
 
-        // 把读到的内容放进缓存：处理损坏恢复、备份、数据迁移。raw 为 null 表示文件不存在
+        /// <summary>
+        /// 把读到的内容放进缓存：处理损坏恢复、备份、数据迁移。raw 为 null 表示文件不存在
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="raw"></param>
+        /// <param name="storageFile"></param>
+        /// <param name="error"></param>
+        /// <returns></returns>
         private StorageFile Install(string name, byte[] raw, StorageFile storageFile, Exception error)
         {
             if (error != null)
