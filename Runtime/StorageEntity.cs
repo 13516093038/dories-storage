@@ -316,8 +316,10 @@ namespace Dories.Storage.Runtime
 
             _files[name] = storageFile ??= new StorageFile { DataVersion = _dataVersion };
             if (storageFile.Dirty)
+            {
                 MarkDirty(storageFile);
-
+            }
+            
             try
             {
                 Migrate(name, storageFile);
@@ -344,14 +346,21 @@ namespace Dories.Storage.Runtime
                 return;
             }
 
-            foreach (var migration in _migrations.Where(m => m != null && m.FromVersion >= from && m.FromVersion < _dataVersion).OrderBy(m => m.FromVersion))
+            foreach (var migration in _migrations
+                         .Where(m => m != null && m.FromVersion >= from && m.FromVersion < _dataVersion)
+                         .OrderBy(m => m.FromVersion))
                 migration.Migrate(this, name);
 
             storageFile.DataVersion = _dataVersion;
             MarkDirty(storageFile);
         }
 
-        // 返回从备份恢复的文件（Dirty，待写回主文件）；没有可用备份返回 null
+        /// <summary>
+        /// 返回从备份恢复的文件（Dirty，待写回主文件）；没有可用备份返回 null
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="raw"></param>
+        /// <returns></returns>
         private StorageFile RecoverCorrupt(string name, byte[] raw)
         {
             TryWrite(name + CorruptSuffix, raw);
@@ -372,15 +381,15 @@ namespace Dories.Storage.Runtime
             }
         }
 
-        private void TryWrite(string name, byte[] data)
+        private void TryWrite(string patch, byte[] data)
         {
             try
             {
-                Provider.Write(name, data);
+                Provider.Write(patch, data);
             }
             catch (Exception e)
             {
-                Log.Warn(Tag, $"写入 {name} 失败: {e.Message}", this);
+                Log.Warn(Tag, $"写入 {patch} 失败: {e.Message}", this);
             }
         }
 

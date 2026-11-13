@@ -26,9 +26,16 @@ namespace Dories.Storage.Runtime
 
         public T Deserialize<T>(byte[] data) => JsonConvert.DeserializeObject<T>(Encoding.UTF8.GetString(data), Settings);
 
-        // Unity 结构体的公开属性会互相引用（Vector3.normalized 等），只按字段序列化（含 Vector2Int 这类私有字段）
+        /// <summary>
+        /// Unity 结构体的公开属性会互相引用（Vector3.normalized 等），只按字段序列化（含 Vector2Int 这类私有字段）
+        /// </summary>
         private sealed class UnityStructResolver : DefaultContractResolver
         {
+            /// <summary>
+            /// 判断是否为unity结构体
+            /// </summary>
+            /// <param name="type"></param>
+            /// <returns></returns>
             private static bool IsUnityStruct(Type type) =>
                 type.IsValueType && !type.IsEnum && !type.IsPrimitive && type.Namespace == "UnityEngine";
 

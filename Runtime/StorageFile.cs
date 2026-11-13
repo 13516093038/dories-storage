@@ -10,7 +10,6 @@ namespace Dories.Storage.Runtime
     internal sealed class StorageFile
     {
         private const uint Magic = 0x46535244; // "DRSF"
-        private const byte Version = 2;
 
         public readonly Dictionary<string, byte[]> Entries = new();
         public bool Dirty;
@@ -25,7 +24,6 @@ namespace Dories.Storage.Runtime
             using var stream = new MemoryStream();
             using var writer = new BinaryWriter(stream);
             writer.Write(Magic);
-            writer.Write(Version);
             writer.Write(DataVersion);
             writer.Write(Entries.Count);
             foreach (var pair in Entries)
@@ -44,11 +42,8 @@ namespace Dories.Storage.Runtime
             using var reader = new BinaryReader(new MemoryStream(data));
             if (reader.ReadUInt32() != Magic)
                 throw new InvalidDataException("不是存储文件（魔数不匹配）");
-            byte version = reader.ReadByte();
-            if (version < 1 || version > Version)
-                throw new InvalidDataException($"不支持的存储文件版本: {version}");
 
-            var file = new StorageFile { DataVersion = version >= 2 ? reader.ReadInt32() : 0 }; // 格式 1 没有数据版本
+            var file = new StorageFile { DataVersion = reader.ReadInt32() };
             for (int i = reader.ReadInt32(); i > 0; i--)
             {
                 var key = reader.ReadString();
